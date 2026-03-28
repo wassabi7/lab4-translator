@@ -10,7 +10,7 @@ async def main():
     translated_text = await TransLate(text, 'auto', 'en')
     detected_lang = await LangDetect(text)
 
-    lang_code = await CodeLang('uk')
+    lang_code = CodeLang('uk')
 
     print("TransLate:", translated_text)
     print("LangDetect:", detected_lang)

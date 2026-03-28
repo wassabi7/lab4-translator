@@ -2,7 +2,13 @@ import sys
 from googletrans import Translator, LANGUAGES
 
 if sys.version_info >= (3, 13):
-    print("УВАГА: googletrans==3.1.0a0 не рекомендується на Python 3.13+")
+    print("=" * 70)
+    print("УВАГА! Несумісність версії Python")
+    print(f"Ви використовуєте Python {sys.version_info.major}.{sys.version_info.minor}")
+    print("Модуль gtrans3 (googletrans==3.1.0a0) призначений для Python < 3.13")
+    print("Рекомендується використовувати модуль gtrans4 (googletrans==4.0.2)")
+    print("=" * 70)
+    print()
 
 translator = Translator()
 
@@ -22,14 +28,14 @@ async def LangDetect(text: str, set: str = "all") -> str:
         if set == "lang":
             return detection.lang
         elif set == "confidence":
-            return f"{detection.confidence:.4f}"
+            return str(detection.confidence)
         else:
             return f"{lang_name} ({detection.lang}), confidence: {detection.confidence:.2%}"
     except Exception as e:
         return f"Помилка визначення мови: {str(e)}"
 
 
-async def CodeLang(lang: str) -> str:
+def CodeLang(lang: str) -> str:
     lang_lower = lang.lower()
     if lang_lower in LANGUAGES:
         return LANGUAGES[lang_lower]
@@ -40,18 +46,18 @@ async def CodeLang(lang: str) -> str:
 
 
 async def LanguageList(out: str = "screen", text: str = None) -> str:
-    lines = ["N  Language             ISO-639 code   Text"]
-    lines.append("-" * 55)
+    lines = ["N  Language          ISO-639 code   Text"]
+    lines.append("-" * 50)
 
-    for i, (code, name) in enumerate(list(LANGUAGES.items())[:40], 1):
+    for i, (code, name) in enumerate(list(LANGUAGES.items())[:30], 1):
         translated = ""
         if text:
             try:
                 res = await translator.translate(text, dest=code)
-                translated = res.text[:35]
+                translated = res.text[:40]
             except:
                 translated = "—"
-        line = f"{i:2d} {name:<20} {code:<10} {translated}"
+        line = f"{i:2d} {name:18} {code:10} {translated}"
         lines.append(line)
 
     result = "\n".join(lines)
