@@ -1,0 +1,24 @@
+# Віртуальне оточення
+maksymenko/
+venv/
+.venv/
+ENV/
+
+# PyCharm / IDE
+.idea/
+*.iml
+
+# Python кеш
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Docker
+__pycache__/
+*.log
+*.tmp
+
+# Результати перекладу (не обов'язково завантажувати)
+*.txt
+languages_*.txt
